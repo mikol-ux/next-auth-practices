@@ -7,7 +7,7 @@ export const publicRoutes = ["/"];
  *used for authentication
  *@type {string[]}
  */
-export const authRoutes = ["/auth/login", "/auth/register"];
+export const authRoutes = ["/auth/login", "/auth/register", "/auth/error"];
 /**
  * the prefix for authentication
  *@type {string}
