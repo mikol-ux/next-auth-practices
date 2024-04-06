@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { UserRole } from "@prisma/client";
 
 export const LoginSchema = z.object({
   email: z.string().email({
@@ -20,4 +21,9 @@ export const ResetSchema = z.object({
 });
 export const NewPasswordSchema = z.object({
   password: z.string().min(6, { message: "minimum 6 characters" }),
+});
+export const SettingsSchema = z.object({
+  role: z.enum([UserRole.ADMIN, UserRole.USER]),
+  email: z.string().email(),
+  //name: z.string(),
 });

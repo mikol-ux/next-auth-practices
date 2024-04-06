@@ -13,7 +13,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from "../form";
 import { LoginSchema } from "../../../schemas";
 import { Input } from "../input";
 import { Button } from "../button";

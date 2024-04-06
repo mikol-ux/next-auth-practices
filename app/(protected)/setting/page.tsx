@@ -1,7 +1,10 @@
 import { auth, signOut } from "../../../auth";
+import { users } from "../../../actions/users";
 
 const SettingsPage = async () => {
   const session = await auth();
+  session?.user;
+
   return (
     <div>
       {JSON.stringify(session)}
@@ -13,6 +16,7 @@ const SettingsPage = async () => {
       >
         <button type="submit">Sign out</button>
       </form>
+      <p>{}</p>
     </div>
   );
 };

@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
+} from "../form";
 import { RegisterSchema } from "../../../schemas";
 import { Input } from "../input";
 import { Button } from "../button";

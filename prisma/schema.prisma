@@ -12,6 +12,7 @@ datasource db {
 enum UserRole{
   ADMIN
   USER
+  SUPER_ADMIN
 }
 model User {
   id            String    @id @default(cuid())
