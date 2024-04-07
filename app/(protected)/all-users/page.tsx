@@ -46,15 +46,14 @@ const Users = () => {
   }, []);
 
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+    <Table className="px-12">
+      <TableCaption>authenticated users</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead className="w-[100px]">s/n</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead className="text-right">Role</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -63,21 +62,14 @@ const Users = () => {
             <TableCell className="font-medium">{index + 1}</TableCell>
 
             <TableCell>
-              <Link href={`/all-users/${invoice.id}`}>{invoice.name}</Link>
+              {invoice.role === "SUPER_ADMIN" ? (
+                <p className="opacity-50">{invoice.name}</p>
+              ) : (
+                <Link href={`/all-users/${invoice.email}`}>{invoice.name}</Link>
+              )}
             </TableCell>
             <TableCell>{invoice.email}</TableCell>
             <TableCell className="text-right">{invoice.role}</TableCell>
-            <TableCell className="text-right">
-              <Select>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Theme" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={UserRole.ADMIN}>ADMIN</SelectItem>
-                  <SelectItem value={UserRole.USER}>USER</SelectItem>
-                </SelectContent>
-              </Select>
-            </TableCell>
           </TableRow>
         ))}
       </TableBody>

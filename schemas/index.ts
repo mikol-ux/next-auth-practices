@@ -23,7 +23,7 @@ export const NewPasswordSchema = z.object({
   password: z.string().min(6, { message: "minimum 6 characters" }),
 });
 export const SettingsSchema = z.object({
-  role: z.enum([UserRole.ADMIN, UserRole.USER]),
-  email: z.string().email(),
+  role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.SUPER_ADMIN]),
+  email: z.optional(z.string().email()),
   //name: z.string(),
 });
