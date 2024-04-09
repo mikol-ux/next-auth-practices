@@ -5,7 +5,7 @@ import { db } from "./lib/db";
 import { getUserById } from "./data/user";
 import { DefaultContext } from "react-icons";
 import { UserRole } from "@prisma/client";
-
+import { getTwoFactorConfirmationById } from "./data/two-factor-confirmation";
 export const {
   handlers: { GET, POST },
   auth,
@@ -30,6 +30,13 @@ export const {
       if (account?.provider !== "credentials") return true;
       const existingUser = await getUserById(user.id);
       if (!existingUser?.emailVerified) return false;
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationById(
+          existingUser.id
+        );
+        if (!twoFactorConfirmation) return false;
+        // delete two factor confirmation
+      }
       return true;
     },
     async session({ token, session }) {

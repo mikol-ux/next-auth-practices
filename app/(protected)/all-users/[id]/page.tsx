@@ -1,43 +1,18 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState, useEffect } from "react";
-import { getUserById } from "../../../../data/user";
-import { useSession } from "next-auth/react";
-
-import { Switch } from "../../../../components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../../components/ui/select";
 import { SettingsSchema } from "../../../../schemas";
-import { Card, CardHeader, CardContent } from "../../../../components/ui/card";
 import { Button } from "../../../../components/ui/button";
 import { update_user } from "../../../../actions/update-user";
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormItem,
-  FormLabel,
-  FormDescription,
-  FormMessage,
-} from "../../../../components/ui/form";
 import { Input } from "../../../../components/ui/input";
-
-import { FormError } from "../../../../components/form-error";
-import { FormSucces } from "../../../../components/form-succes";
 import { UserRole } from "@prisma/client";
 import { singleUser } from "../../../../actions/singleUser";
-import email from "next-auth/providers/email";
+import { toast, Toaster } from "sonner";
 type Props = {
   params: {
-    mail: string;
+    id: string;
   };
 };
 interface FormData {
@@ -50,7 +25,7 @@ interface FormData {
   role: UserRole;
 }
 
-const SettingsPage = ({ params: { mail } }: Props) => {
+const SettingsPage = ({ params: { id } }: Props) => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -66,42 +41,34 @@ const SettingsPage = ({ params: { mail } }: Props) => {
     role: "USER",
   });
 
-  // Form state management with useForm
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: formData, // Use formData state as defaults
-    resolver: zodResolver(SettingsSchema), // Optional schema for validation (define schema)
+    defaultValues: formData,
+    resolver: zodResolver(SettingsSchema),
   });
 
-  // Fetch data upon component mount and re-fetch on mail change
   useEffect(() => {
     const fetchData = async () => {
-      const data = await singleUser(mail);
+      const data = await singleUser(id);
       console.log(data);
-      setUser(data); // Update user state
-      setFormData(data as any); // Update formData state with fetched data
+      setUser(data);
+      setFormData(data as any);
       console.log(register);
     };
 
     fetchData();
-  }, [mail]);
+  }, [id]);
 
-  // Handle form submission (replace with your logic)
   const onSubmit = (data: FormData) => {
     console.log("Form submitted:", data);
-    // Perform form data submission logic here (API call or other actions)
     startTransition(() => {
       update_user(data)
         .then((data) => {
-          /*  if (data.error) {
-            setError(data.error);
-          } */
-
           if (data.success) {
-            setSuccess(data.success);
+            toast.success(data.success);
           }
         })
         .catch(() => setError("Something went wrong!"));
@@ -111,11 +78,8 @@ const SettingsPage = ({ params: { mail } }: Props) => {
   // Use watch hook to update formData state on changes
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full  flex justify-center items-center pt-44">
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto">
-        {isLoading && <p>Loading...</p>}
-        {error && <p className="error-message">{error}</p>}
-        {success && <p className="success-message">{success}</p>}
         <div className="mb-5">
           <label
             htmlFor="email"
@@ -123,10 +87,10 @@ const SettingsPage = ({ params: { mail } }: Props) => {
           >
             Email:
           </label>
-          <input
+          <Input
             id="email"
             type="email"
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            //className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             disabled={isPending}
             {...register("email", {
               required: "Email is required.",
@@ -169,9 +133,10 @@ const SettingsPage = ({ params: { mail } }: Props) => {
             <p className="error-message">{errors.role.message}</p>
           )}
         </div>
-        <Button type="submit" variant="default">
-          Save Changes
+        <Button type="submit" variant="default" onClick={() => onSubmit}>
+          Update Role
         </Button>
+        <Toaster position={"top-center"} richColors />
       </form>
     </div>
   );

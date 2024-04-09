@@ -65,7 +65,7 @@ const Users = () => {
               {invoice.role === "SUPER_ADMIN" ? (
                 <p className="opacity-50">{invoice.name}</p>
               ) : (
-                <Link href={`/all-users/${invoice.email}`}>{invoice.name}</Link>
+                <Link href={`/all-users/${invoice.id}`}>{invoice.name}</Link>
               )}
             </TableCell>
             <TableCell>{invoice.email}</TableCell>

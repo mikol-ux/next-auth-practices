@@ -22,8 +22,8 @@ export const update_user = async (values: FormData) => {
   //const existingUser = await getUserByEmail(values.email);
   // console.log(values.email);
   //console.log(existingUser);
-  //const existingUserById = await getUserById(values.name);
-  /*  if (!existingUser) {
+  /*  const existingUser = await getUserById(values.id);
+  if (!existingUser) {
     return { error: "User Does not exist" };
   } */
   await db.user.update({
@@ -32,5 +32,5 @@ export const update_user = async (values: FormData) => {
       role: values.role,
     },
   });
-  return { success: "User does not exist" };
+  return { success: `User role changed to ${values.role}` };
 };
