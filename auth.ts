@@ -34,9 +34,14 @@ export const {
         const twoFactorConfirmation = await getTwoFactorConfirmationById(
           existingUser.id
         );
+        console.log({ twoFactorConfirmation });
         if (!twoFactorConfirmation) return false;
         // delete two factor confirmation
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id },
+        });
       }
+
       return true;
     },
     async session({ token, session }) {
