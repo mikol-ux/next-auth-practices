@@ -13,13 +13,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../form";
-import { LoginSchema } from "../../../schemas";
-import { Input } from "../input";
-import { Button } from "../button";
-import { FormError } from "../../form-error";
-import { FormSucces } from "../../form-succes";
-import { login } from "../../../actions/login";
+} from "../ui/form";
+import { LoginSchema } from "../../schemas";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { FormError } from "../form-error";
+import { FormSucces } from "../form-succes";
+import { login } from "../../actions/login";
 export const LoginForm = () => {
   const searchParams = useSearchParams();
   const urlError =

@@ -7,7 +7,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "../card";
+} from "../ui/card";
 export default function ErrorCard() {
   return (
     <Card className="w-[400px] shadow-md">

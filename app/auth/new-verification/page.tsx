@@ -1,5 +1,5 @@
 import React from "react";
-import NewVerificationForm from "../../../components/ui/auth/new-verification";
+import NewVerificationForm from "../../../components/auth/new-verification";
 
 export default function NewVerification() {
   return (

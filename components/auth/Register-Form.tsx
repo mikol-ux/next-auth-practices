@@ -11,13 +11,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../form";
-import { RegisterSchema } from "../../../schemas";
-import { Input } from "../input";
-import { Button } from "../button";
-import { FormError } from "../../form-error";
-import { FormSucces } from "../../form-succes";
-import { register } from "../../../actions/register";
+} from "../ui/form";
+import { RegisterSchema } from "../../schemas";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { FormError } from "../form-error";
+import { FormSucces } from "../form-succes";
+import { register } from "../../actions/register";
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");

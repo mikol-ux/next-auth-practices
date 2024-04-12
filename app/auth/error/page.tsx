@@ -1,4 +1,4 @@
-import ErrorCard from "../../../components/ui/auth/ErrorCard";
+import ErrorCard from "../../../components/auth/ErrorCard";
 const AuthErrorPage = () => {
   return (
     <div>

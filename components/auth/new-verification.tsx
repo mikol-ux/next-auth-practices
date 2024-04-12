@@ -3,9 +3,9 @@ import { BeatLoader } from "react-spinners";
 import { CardWrapper } from "./card-wrapper";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { newVerification } from "../../../actions/new-verification";
-import { FormError } from "../../form-error";
-import { FormSucces } from "../../form-succes";
+import { newVerification } from "../../actions/new-verification";
+import { FormError } from "../form-error";
+import { FormSucces } from "../form-succes";
 export default function NewVerificationForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");

@@ -3,8 +3,8 @@ import { signIn } from "next-auth/react";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Button } from "../button";
-import { DEFAULT_LOGON_REDIRECT } from "../../../routes";
+import { Button } from "../ui/button";
+import { DEFAULT_LOGON_REDIRECT } from "../../routes";
 export default function Social() {
   const onClick = (provider: "google" | "github") => {
     signIn(provider, {
