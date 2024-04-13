@@ -1,4 +1,3 @@
-"use client";
 import * as z from "zod";
 import {
   Select,
@@ -8,6 +7,7 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import { SettingsSchema } from "../../../schemas";
+import useSWR from "swr";
 import {
   Table,
   TableBody,
@@ -23,7 +23,6 @@ import { Value } from "@radix-ui/react-select";
 import { UserRole } from "@prisma/client";
 import { Form } from "../../../components/ui/form";
 import { update_user } from "../../../actions/update-user";
-import { useEffect, useState } from "react";
 import Link from "next/link";
 type User = {
   id: string;
@@ -35,29 +34,23 @@ type User = {
   role: UserRole;
 };
 
-const Users = () => {
-  const [Users, setUsers] = useState<User[]>([]);
-  const fetchData = async () => {
-    const Allusers = await users();
-    setUsers(Allusers);
-  };
-  useEffect(() => {
-    fetchData(); // Fetch the first page on component mount
-  }, []);
+const Users = async () => {
+  const data = await users();
 
+  console.log(data);
   return (
-    <Table className="px-12">
-      <TableCaption>authenticated users</TableCaption>
+    <Table className="w-[600px] bg-secondary">
+      <TableCaption>authenticated user </TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">s/n</TableHead>
+          <TableHead>s/n</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead className="text-right">Role</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Users.map((invoice, index) => (
+        {data.map((invoice, index) => (
           <TableRow key={invoice.id}>
             <TableCell className="font-medium">{index + 1}</TableCell>
 
