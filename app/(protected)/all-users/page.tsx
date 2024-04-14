@@ -1,13 +1,3 @@
-import * as z from "zod";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select";
-import { SettingsSchema } from "../../../schemas";
-import useSWR from "swr";
 import {
   Table,
   TableBody,
@@ -19,10 +9,7 @@ import {
   TableFooter,
 } from "../../../components/ui/table";
 import { users } from "../../../actions/users";
-import { Value } from "@radix-ui/react-select";
 import { UserRole } from "@prisma/client";
-import { Form } from "../../../components/ui/form";
-import { update_user } from "../../../actions/update-user";
 import Link from "next/link";
 type User = {
   id: string;
@@ -37,7 +24,7 @@ type User = {
 const Users = async () => {
   const data = await users();
 
-  console.log(data);
+  //console.log(data);
   return (
     <Table className="w-[600px] bg-secondary">
       <TableCaption>authenticated user </TableCaption>
