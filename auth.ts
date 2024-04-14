@@ -63,16 +63,20 @@ export const {
         // for checking Oauth
         session.user.isOAuth = token.isOAuth as boolean;
       }
+      // console.log({ session });
       return session;
     },
     async jwt({ token }) {
-      console.log("I AM BEING CALLED AGAINs");
+      // console.log("I AM BEING CALLED AGAINs");
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
       // for checking Oauth
       const existingAccount = await getAccountByuserId(existingUser.id);
-      token.isOauth = !!existingAccount;
+      console.log({ existingAccount });
+      token.isOAuth = !!existingAccount;
+      // console.log(!!existingAccount);
+      // console.log(existingAccount);
       // for checking Oauth
       //for seetting page
       token.name = existingUser.name;

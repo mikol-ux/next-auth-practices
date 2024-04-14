@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState, useEffect } from "react";
-import { SettingsSchema } from "../../../../schemas";
+import { RoleSchema } from "../../../../schemas";
 import { Button } from "../../../../components/ui/button";
 import { update_user } from "../../../../actions/update-user";
 import { Input } from "../../../../components/ui/input";
@@ -47,7 +47,7 @@ const SettingsPage = ({ params: { id } }: Props) => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: formData,
-    resolver: zodResolver(SettingsSchema),
+    resolver: zodResolver(RoleSchema),
   });
 
   useEffect(() => {

@@ -6,7 +6,7 @@ export const getAccountByuserId = async (userId: string) => {
       where: { userId },
     });
     return account;
-  } catch (error) {
+  } catch {
     return null; // {error:"null"}
   }
 };
