@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { useTransition, useState } from "react";
 import { useCurrentUser } from "../../../hooks/use-current-user";
 import { SettingsSchema } from "../../../schemas";
 import { settings } from "../../../actions/settings";
@@ -27,14 +27,28 @@ import { useSession } from "next-auth/react";
 import { Button } from "../../../components/ui/button";
 const SettingsPage = () => {
   const { update } = useSession();
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
-  const onclick = () => {
+  const form = useForm<z.infer<typeof SettingsSchema>>({
+    resolver: zodResolver(SettingsSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+  const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition(() => {
-      settings({
-        name: "fingerly",
-      }).then(() => {
-        update();
-      });
+      settings(values)
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          }
+          if (data.success) {
+            update();
+            setSuccess(data.success);
+          }
+        })
+        .catch(() => setError("Something went wrong"));
     });
   };
   return (
@@ -43,9 +57,29 @@ const SettingsPage = () => {
         <p className="text-2xl font-semibold text-center">settings</p>
       </CardHeader>
       <CardContent>
-        <Button disabled={isPending} onClick={onclick}>
-          Update name
-        </Button>
+        <Form {...form}>
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="john doe"
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button type="submit">Save</Button>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
