@@ -54,6 +54,7 @@ const SettingsPage = () => {
       name: user?.name || undefined,
       email: user?.email || undefined,
       role: user?.role || undefined,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
